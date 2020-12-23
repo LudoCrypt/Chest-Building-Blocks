@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import net.ludocrypt.chestblocks.block.ChestBlock;
-import net.ludocrypt.chestblocks.block.entity.ChestBlockEntity;
+import net.ludocrypt.chestblocks.block.entity.ChestBlockBuilderEntity;
 import net.ludocrypt.chestblocks.client.atlas.ChestAtlasSprites;
 import net.ludocrypt.chestblocks.config.ChestBlocksConfig;
 import net.minecraft.block.Block;
@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
+public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEntity> {
 
 	private boolean christmas;
 
@@ -57,7 +57,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 	}
 
 	@Override
-	public void render(ChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void render(ChestBlockBuilderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		Block block = entity.getCachedState().getBlock();
 		World world = entity.getWorld();
 		BlockPos pos = entity.getPos();
@@ -137,7 +137,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 	}
 
-	private void renderNorthern(ChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
+	private void renderNorthern(ChestBlockBuilderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
 
 		// Bottom Right
 
@@ -195,9 +195,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		if (shouldUp) {
 			if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.NORTH) {
-				sprite = 20;
+				sprite = 60;
 			} else {
-				sprite = 21;
+				sprite = 61;
 			}
 		}
 
@@ -209,9 +209,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 			if (shouldUp) {
 				if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.NORTH) {
-					sprite = 24;
+					sprite = 64;
 				} else {
-					sprite = 25;
+					sprite = 65;
 				}
 			} else {
 				sprite = 13;
@@ -238,9 +238,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		if (shouldUp) {
 			if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.NORTH) {
-				sprite = 22;
+				sprite = 62;
 			} else {
-				sprite = 23;
+				sprite = 63;
 			}
 		}
 
@@ -252,9 +252,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 			if (shouldUp) {
 				if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.NORTH) {
-					sprite = 26;
+					sprite = 66;
 				} else {
-					sprite = 27;
+					sprite = 67;
 				}
 			} else {
 				sprite = 15;
@@ -398,7 +398,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		matrices.pop();
 	}
 
-	private void renderSouthern(ChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
+	private void renderSouthern(ChestBlockBuilderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
 
 		// Bottom Right
 
@@ -456,9 +456,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		if (shouldUp) {
 			if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.SOUTH) {
-				sprite = 20;
+				sprite = 60;
 			} else {
-				sprite = 21;
+				sprite = 61;
 			}
 		}
 
@@ -469,9 +469,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		if (!Up && East && !EastUp) {
 			if (shouldUp) {
 				if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.SOUTH) {
-					sprite = 24;
+					sprite = 64;
 				} else {
-					sprite = 25;
+					sprite = 65;
 				}
 			} else {
 				sprite = 13;
@@ -497,9 +497,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		if (shouldUp) {
 			if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.SOUTH) {
-				sprite = 22;
+				sprite = 62;
 			} else {
-				sprite = 23;
+				sprite = 63;
 			}
 		}
 
@@ -511,9 +511,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 			if (shouldUp) {
 				if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.SOUTH) {
-					sprite = 26;
+					sprite = 66;
 				} else {
-					sprite = 27;
+					sprite = 67;
 				}
 			} else {
 				sprite = 15;
@@ -552,7 +552,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		matrices.pop();
 	}
 
-	private void renderEastern(ChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
+	private void renderEastern(ChestBlockBuilderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
 
 		// Bottom Right
 
@@ -610,9 +610,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		if (shouldUp) {
 			if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.EAST) {
-				sprite = 20;
+				sprite = 60;
 			} else {
-				sprite = 21;
+				sprite = 61;
 			}
 		}
 
@@ -623,9 +623,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		if (!Up && North && !NorthUp) {
 			if (shouldUp) {
 				if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.EAST) {
-					sprite = 24;
+					sprite = 64;
 				} else {
-					sprite = 25;
+					sprite = 65;
 				}
 			} else {
 				sprite = 13;
@@ -651,9 +651,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		if (shouldUp) {
 			if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.EAST) {
-				sprite = 22;
+				sprite = 62;
 			} else {
-				sprite = 23;
+				sprite = 63;
 			}
 		}
 
@@ -664,9 +664,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		if (!Up && South && !SouthUp) {
 			if (shouldUp) {
 				if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.EAST) {
-					sprite = 26;
+					sprite = 66;
 				} else {
-					sprite = 27;
+					sprite = 67;
 				}
 			} else {
 				sprite = 15;
@@ -706,7 +706,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		matrices.pop();
 	}
 
-	private void renderWestern(ChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
+	private void renderWestern(ChestBlockBuilderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
 
 		// Bottom Right
 
@@ -764,9 +764,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		if (shouldUp) {
 			if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.WEST) {
-				sprite = 20;
+				sprite = 60;
 			} else {
-				sprite = 21;
+				sprite = 61;
 			}
 		}
 
@@ -777,9 +777,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		if (!Up && South && !SouthUp) {
 			if (shouldUp) {
 				if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.WEST) {
-					sprite = 24;
+					sprite = 64;
 				} else {
-					sprite = 25;
+					sprite = 65;
 				}
 			} else {
 				sprite = 13;
@@ -805,9 +805,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		if (shouldUp) {
 			if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.WEST) {
-				sprite = 22;
+				sprite = 62;
 			} else {
-				sprite = 23;
+				sprite = 63;
 			}
 		}
 
@@ -818,9 +818,9 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		if (!Up && North && !NorthUp) {
 			if (shouldUp) {
 				if (entity.latched && entity.getCachedState().get(ChestBlock.FACING) == Direction.WEST) {
-					sprite = 26;
+					sprite = 66;
 				} else {
-					sprite = 27;
+					sprite = 67;
 				}
 			} else {
 				sprite = 15;
@@ -860,26 +860,26 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		matrices.pop();
 	}
 
-	private void renderUpper(ChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
+	private void renderUpper(ChestBlockBuilderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
 
 		// Bottom Right
 
-		int sprite = 0;
+		int sprite = 20;
 
 		if (North && !West && !NorthWest) {
-			sprite = 8;
+			sprite = 28;
 		}
 
 		if (!North && West && !NorthWest) {
-			sprite = 12;
+			sprite = 32;
 		}
 
 		if (North && West && !NorthWest) {
-			sprite = 16;
+			sprite = 36;
 		}
 
 		if (North && West && NorthWest) {
-			sprite = 4;
+			sprite = 24;
 		}
 
 		SpriteIdentifier spriteIdentifier = CHESTS.get(sprite);
@@ -889,22 +889,22 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		// Bottom Left
 
-		sprite = 2;
+		sprite = 22;
 
 		if (North && !East && !NorthEast) {
-			sprite = 10;
+			sprite = 30;
 		}
 
 		if (!North && East && !NorthEast) {
-			sprite = 14;
+			sprite = 34;
 		}
 
 		if (North && East && !NorthEast) {
-			sprite = 18;
+			sprite = 38;
 		}
 
 		if (North && East && NorthEast) {
-			sprite = 6;
+			sprite = 26;
 		}
 
 		spriteIdentifier = CHESTS.get(sprite);
@@ -914,22 +914,22 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		// Top Right
 
-		sprite = 1;
+		sprite = 21;
 
 		if (South && !West && !SouthWest) {
-			sprite = 9;
+			sprite = 29;
 		}
 
 		if (!South && West && !SouthWest) {
-			sprite = 13;
+			sprite = 33;
 		}
 
 		if (South && West && !SouthWest) {
-			sprite = 17;
+			sprite = 37;
 		}
 
 		if (South && West && SouthWest) {
-			sprite = 5;
+			sprite = 25;
 		}
 
 		spriteIdentifier = CHESTS.get(sprite);
@@ -939,22 +939,22 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		// Top Left
 
-		sprite = 3;
+		sprite = 23;
 
 		if (South && !East && !SouthEast) {
-			sprite = 11;
+			sprite = 31;
 		}
 
 		if (!South && East && !SouthEast) {
-			sprite = 15;
+			sprite = 35;
 		}
 
 		if (South && East && !SouthEast) {
-			sprite = 19;
+			sprite = 39;
 		}
 
 		if (South && East && SouthEast) {
-			sprite = 7;
+			sprite = 27;
 		}
 
 		spriteIdentifier = CHESTS.get(sprite);
@@ -982,26 +982,26 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 		matrices.pop();
 	}
 
-	private void renderLower(ChestBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
+	private void renderLower(ChestBlockBuilderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, boolean shouldUp) {
 
 		// Bottom Right
 
-		int sprite = 0;
+		int sprite = 40;
 
 		if (South && !West && !SouthWest) {
-			sprite = 8;
+			sprite = 48;
 		}
 
 		if (!South && West && !SouthWest) {
-			sprite = 12;
+			sprite = 52;
 		}
 
 		if (South && West && !SouthWest) {
-			sprite = 16;
+			sprite = 56;
 		}
 
 		if (South && West && SouthWest) {
-			sprite = 4;
+			sprite = 44;
 		}
 
 		SpriteIdentifier spriteIdentifier = CHESTS.get(sprite);
@@ -1011,22 +1011,22 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		// Bottom Left
 
-		sprite = 2;
+		sprite = 42;
 
 		if (South && !East && !SouthEast) {
-			sprite = 10;
+			sprite = 50;
 		}
 
 		if (!South && East && !SouthEast) {
-			sprite = 14;
+			sprite = 54;
 		}
 
 		if (South && East && !SouthEast) {
-			sprite = 18;
+			sprite = 58;
 		}
 
 		if (South && East && SouthEast) {
-			sprite = 6;
+			sprite = 46;
 		}
 
 		spriteIdentifier = CHESTS.get(sprite);
@@ -1036,22 +1036,22 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		// Top Right
 
-		sprite = 1;
+		sprite = 41;
 
 		if (North && !West && !NorthWest) {
-			sprite = 9;
+			sprite = 49;
 		}
 
 		if (!North && West && !NorthWest) {
-			sprite = 13;
+			sprite = 53;
 		}
 
 		if (North && West && !NorthWest) {
-			sprite = 17;
+			sprite = 57;
 		}
 
 		if (North && West && NorthWest) {
-			sprite = 5;
+			sprite = 45;
 		}
 
 		spriteIdentifier = CHESTS.get(sprite);
@@ -1061,22 +1061,22 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockEntity> {
 
 		// Top Left
 
-		sprite = 3;
+		sprite = 43;
 
 		if (North && !East && !NorthEast) {
-			sprite = 11;
+			sprite = 51;
 		}
 
 		if (!North && East && !NorthEast) {
-			sprite = 15;
+			sprite = 55;
 		}
 
 		if (North && East && !NorthEast) {
-			sprite = 19;
+			sprite = 59;
 		}
 
 		if (North && East && NorthEast) {
-			sprite = 7;
+			sprite = 47;
 		}
 
 		spriteIdentifier = CHESTS.get(sprite);

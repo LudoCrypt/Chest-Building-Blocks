@@ -20,7 +20,7 @@ public class ChestAtlasSprites {
 
 	public static void init() {
 
-		for (int i = 0; i <= 27; i++) {
+		for (int i = 0; i <= 67; i++) {
 			NORMAL_CHESTS.add(new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/normal/" + i)));
 			ENDER_CHESTS.add(new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/ender/" + i)));
 			CHRISTMAS_CHESTS.add(new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/christmas/" + i)));

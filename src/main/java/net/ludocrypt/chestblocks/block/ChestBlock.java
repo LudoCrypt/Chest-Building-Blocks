@@ -1,6 +1,6 @@
 package net.ludocrypt.chestblocks.block;
 
-import net.ludocrypt.chestblocks.block.entity.ChestBlockEntity;
+import net.ludocrypt.chestblocks.block.entity.ChestBlockBuilderEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -54,39 +54,37 @@ public class ChestBlock extends Block implements Waterloggable, BlockEntityProvi
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		VoxelShape Center = createOffsetCuboidShape(1, 1, 1, 15, 15, 15);
 
-		Block block = this.getDefaultState().getBlock();
+		boolean Up = world.getBlockState(pos.up()).getBlock() == this;
+		boolean Down = world.getBlockState(pos.down()).getBlock() == this;
+		boolean North = world.getBlockState(pos.north()).getBlock() == this;
+		boolean East = world.getBlockState(pos.east()).getBlock() == this;
+		boolean South = world.getBlockState(pos.south()).getBlock() == this;
+		boolean West = world.getBlockState(pos.west()).getBlock() == this;
 
-		boolean Up = world.getBlockState(pos.up()).getBlock() == block;
-		boolean Down = world.getBlockState(pos.down()).getBlock() == block;
-		boolean North = world.getBlockState(pos.north()).getBlock() == block;
-		boolean East = world.getBlockState(pos.east()).getBlock() == block;
-		boolean South = world.getBlockState(pos.south()).getBlock() == block;
-		boolean West = world.getBlockState(pos.west()).getBlock() == block;
+		boolean NorthEast = world.getBlockState(pos.north().east()).getBlock() == this && North && East;
+		boolean SouthEast = world.getBlockState(pos.south().east()).getBlock() == this && South && East;
+		boolean NorthWest = world.getBlockState(pos.north().west()).getBlock() == this && North && West;
+		boolean SouthWest = world.getBlockState(pos.south().west()).getBlock() == this && South && West;
 
-		boolean NorthEast = world.getBlockState(pos.north().east()).getBlock() == block && North && East;
-		boolean SouthEast = world.getBlockState(pos.south().east()).getBlock() == block && South && East;
-		boolean NorthWest = world.getBlockState(pos.north().west()).getBlock() == block && North && West;
-		boolean SouthWest = world.getBlockState(pos.south().west()).getBlock() == block && South && West;
+		boolean NorthUp = world.getBlockState(pos.north().up()).getBlock() == this && North && Up;
+		boolean EastUp = world.getBlockState(pos.east().up()).getBlock() == this && East && Up;
+		boolean SouthUp = world.getBlockState(pos.south().up()).getBlock() == this && South && Up;
+		boolean WestUp = world.getBlockState(pos.west().up()).getBlock() == this && West && Up;
 
-		boolean NorthUp = world.getBlockState(pos.north().up()).getBlock() == block && North && Up;
-		boolean EastUp = world.getBlockState(pos.east().up()).getBlock() == block && East && Up;
-		boolean SouthUp = world.getBlockState(pos.south().up()).getBlock() == block && South && Up;
-		boolean WestUp = world.getBlockState(pos.west().up()).getBlock() == block && West && Up;
+		boolean NorthDown = world.getBlockState(pos.north().down()).getBlock() == this && North && Down;
+		boolean EastDown = world.getBlockState(pos.east().down()).getBlock() == this && East && Down;
+		boolean SouthDown = world.getBlockState(pos.south().down()).getBlock() == this && South && Down;
+		boolean WestDown = world.getBlockState(pos.west().down()).getBlock() == this && West && Down;
 
-		boolean NorthDown = world.getBlockState(pos.north().down()).getBlock() == block && North && Down;
-		boolean EastDown = world.getBlockState(pos.east().down()).getBlock() == block && East && Down;
-		boolean SouthDown = world.getBlockState(pos.south().down()).getBlock() == block && South && Down;
-		boolean WestDown = world.getBlockState(pos.west().down()).getBlock() == block && West && Down;
+		boolean NorthEastUp = world.getBlockState(pos.north().east().up()).getBlock() == this && NorthEast && Up;
+		boolean SouthEastUp = world.getBlockState(pos.south().east().up()).getBlock() == this && SouthEast && Up;
+		boolean NorthWestUp = world.getBlockState(pos.north().west().up()).getBlock() == this && NorthWest && Up;
+		boolean SouthWestUp = world.getBlockState(pos.south().west().up()).getBlock() == this && SouthWest && Up;
 
-		boolean NorthEastUp = world.getBlockState(pos.north().east().up()).getBlock() == block && NorthEast && Up;
-		boolean SouthEastUp = world.getBlockState(pos.south().east().up()).getBlock() == block && SouthEast && Up;
-		boolean NorthWestUp = world.getBlockState(pos.north().west().up()).getBlock() == block && NorthWest && Up;
-		boolean SouthWestUp = world.getBlockState(pos.south().west().up()).getBlock() == block && SouthWest && Up;
-
-		boolean NorthEastDown = world.getBlockState(pos.north().east().down()).getBlock() == block && NorthEast && Down;
-		boolean SouthEastDown = world.getBlockState(pos.south().east().down()).getBlock() == block && SouthEast && Down;
-		boolean NorthWestDown = world.getBlockState(pos.north().west().down()).getBlock() == block && NorthWest && Down;
-		boolean SouthWestDown = world.getBlockState(pos.south().west().down()).getBlock() == block && SouthWest && Down;
+		boolean NorthEastDown = world.getBlockState(pos.north().east().down()).getBlock() == this && NorthEast && Down;
+		boolean SouthEastDown = world.getBlockState(pos.south().east().down()).getBlock() == this && SouthEast && Down;
+		boolean NorthWestDown = world.getBlockState(pos.north().west().down()).getBlock() == this && NorthWest && Down;
+		boolean SouthWestDown = world.getBlockState(pos.south().west().down()).getBlock() == this && SouthWest && Down;
 
 		if (North) {
 			VoxelShape NorthShape = createOffsetCuboidShape(1, 1, 0, 15, 15, 1);
@@ -210,7 +208,7 @@ public class ChestBlock extends Block implements Waterloggable, BlockEntityProvi
 
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
-		return new ChestBlockEntity();
+		return new ChestBlockBuilderEntity();
 	}
 
 	@Override
@@ -230,7 +228,7 @@ public class ChestBlock extends Block implements Waterloggable, BlockEntityProvi
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
-		ChestBlockEntity chest = (ChestBlockEntity) world.getBlockEntity(pos);
+		ChestBlockBuilderEntity chest = (ChestBlockBuilderEntity) world.getBlockEntity(pos);
 
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
@@ -256,8 +254,8 @@ public class ChestBlock extends Block implements Waterloggable, BlockEntityProvi
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (state.getBlock() != newState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof ChestBlockEntity) {
-				ItemScatterer.spawn(world, pos, (ChestBlockEntity) blockEntity);
+			if (blockEntity instanceof ChestBlockBuilderEntity) {
+				ItemScatterer.spawn(world, pos, (ChestBlockBuilderEntity) blockEntity);
 				world.updateComparators(pos, this);
 			}
 			super.onStateReplaced(state, world, pos, newState, moved);

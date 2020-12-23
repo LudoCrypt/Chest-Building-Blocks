@@ -17,13 +17,13 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 
-public class ChestBlockEntity extends LootableContainerBlockEntity {
+public class ChestBlockBuilderEntity extends LootableContainerBlockEntity {
 
 	private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
 	public boolean locked = false;
 	public boolean latched = true;
 
-	public ChestBlockEntity() {
+	public ChestBlockBuilderEntity() {
 		super(ChestBlocks.CHEST_BLOCK_ENTITY);
 	}
 
@@ -76,12 +76,11 @@ public class ChestBlockEntity extends LootableContainerBlockEntity {
 
 	@Override
 	public void onOpen(PlayerEntity player) {
-		player.world.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, 1.0F);
+		this.world.playSound(null, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
 	}
 
 	@Override
 	public void onClose(PlayerEntity player) {
-		player.world.playSound(null, pos, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, 1.0F);
+		this.world.playSound(null, pos, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
 	}
-
 }
