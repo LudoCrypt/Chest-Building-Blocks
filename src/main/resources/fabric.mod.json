@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "chestblocks",
+	"version": "${version}",
+	"name": "Chest Building Blocks",
+	"description": "Lets chests connect to one another, build any shape and size of chest necessary!",
+	"authors": [
+		"LudoCrypt"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/chestblocks/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.ludocrypt.chestblocks.ChestBlocks"
+		],
+		"client": [
+			"net.ludocrypt.chestblocks.client.ChestBlocksClient"
+		],
+		"modmenu": [
+			"net.ludocrypt.chestblocks.config.ChestBlocksModMenuCompat"
+		]
+	},
+	"mixins": [
+		"chestblocks.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.7.4",
+		"fabric": "*",
+		"minecraft": "1.16.x"
+	},
+	"suggests": {
+		"flamingo": "*"
+	}
+}

@@ -1,0 +1,4 @@
+{
+	"text.autoconfig.chestblocks.title": "Chest Blocks Config",
+	"text.autoconfig.chestblocks.option.expensiveRendering": "Rendering recursion limit (Higher values are expensive!)"
+}

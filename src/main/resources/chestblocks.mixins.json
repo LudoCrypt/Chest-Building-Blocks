@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "net.ludocrypt.chestblocks.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+	],
+	"client": [
+		"TexturedRenderLayersMixin",
+		"BuiltinModelItemRendererMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
