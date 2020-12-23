@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"###",
+		"#E#",
+		"###"
+	],
+	"key": {
+		"#": {
+			"tag": "minecraft:planks"
+		},
+		"E": {
+			"item": "minecraft:chest"
+		}
+	},
+	"result": {
+		"item": "chestblocks:chest_block",
+		"count": 2
+	}
+}
