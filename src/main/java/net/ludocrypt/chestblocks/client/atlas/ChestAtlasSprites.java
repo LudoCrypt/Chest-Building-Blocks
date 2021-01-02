@@ -1,31 +1,31 @@
 package net.ludocrypt.chestblocks.client.atlas;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.ludocrypt.chestblocks.ChestBlocks;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 public class ChestAtlasSprites {
+
+	public static final Map<Identifier, SpriteIdentifier> CHEST_SPRITES = new HashMap<Identifier, SpriteIdentifier>();
 
 	public static final Identifier CHEST_BLOCK_ATLAS_TEXTURE = ChestBlocks.id("textures/atlas/chest_blocks.png");
 
-	public static final SpriteIdentifier NORMAL_LATCH = new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/normal/latch"));
-	public static final SpriteIdentifier ENDER_LATCH = new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/ender/latch"));
-	public static final SpriteIdentifier CHRISTMAS_LATCH = new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/christmas/latch"));
+	public static final SpriteIdentifier NORMAL = add("chest_blocks/normal");
+	public static final SpriteIdentifier TRAPPED = add("chest_blocks/trapped");
+	public static final SpriteIdentifier ENDER = add("chest_blocks/ender");
+	public static final SpriteIdentifier CHRISTMAS = add("chest_blocks/christmas");
 
-	public static final ArrayList<SpriteIdentifier> NORMAL_CHESTS = new ArrayList<SpriteIdentifier>();
-	public static final ArrayList<SpriteIdentifier> ENDER_CHESTS = new ArrayList<SpriteIdentifier>();
-	public static final ArrayList<SpriteIdentifier> CHRISTMAS_CHESTS = new ArrayList<SpriteIdentifier>();
-
-	public static void init() {
-
-		for (int i = 0; i <= 67; i++) {
-			NORMAL_CHESTS.add(new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/normal/" + i)));
-			ENDER_CHESTS.add(new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/ender/" + i)));
-			CHRISTMAS_CHESTS.add(new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, ChestBlocks.id("chest_blocks/christmas/" + i)));
-		}
-
+	private static SpriteIdentifier add(String id) {
+		Identifier realId = ChestBlocks.id(id);
+		SpriteIdentifier sprite = new SpriteIdentifier(CHEST_BLOCK_ATLAS_TEXTURE, realId);
+		CHEST_SPRITES.put(realId, sprite);
+		return sprite;
 	}
 
 }

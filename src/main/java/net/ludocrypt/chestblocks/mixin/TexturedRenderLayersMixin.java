@@ -19,18 +19,9 @@ public class TexturedRenderLayersMixin {
 
 	@Inject(method = "addDefaultTextures", at = @At("TAIL"))
 	private static void addDefaultTextures(Consumer<SpriteIdentifier> adder, CallbackInfo ci) {
-		ChestAtlasSprites.NORMAL_CHESTS.forEach((sprite) -> {
+		ChestAtlasSprites.CHEST_SPRITES.forEach((id, sprite) -> {
 			adder.accept(sprite);
 		});
-		ChestAtlasSprites.ENDER_CHESTS.forEach((sprite) -> {
-			adder.accept(sprite);
-		});
-		ChestAtlasSprites.CHRISTMAS_CHESTS.forEach((sprite) -> {
-			adder.accept(sprite);
-		});
-		adder.accept(ChestAtlasSprites.NORMAL_LATCH);
-		adder.accept(ChestAtlasSprites.ENDER_LATCH);
-		adder.accept(ChestAtlasSprites.CHRISTMAS_LATCH);
 	}
 
 }

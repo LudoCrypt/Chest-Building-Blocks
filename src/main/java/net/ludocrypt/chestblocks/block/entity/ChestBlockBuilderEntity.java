@@ -21,7 +21,7 @@ public class ChestBlockBuilderEntity extends LootableContainerBlockEntity {
 
 	private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
 	public boolean locked = false;
-	public boolean latched = true;
+	protected int viewerCount;
 
 	public ChestBlockBuilderEntity() {
 		super(ChestBlocks.CHEST_BLOCK_ENTITY);
@@ -35,7 +35,6 @@ public class ChestBlockBuilderEntity extends LootableContainerBlockEntity {
 			Inventories.fromTag(tag, this.inventory);
 		}
 		this.locked = tag.getBoolean("locked");
-		this.latched = tag.getBoolean("latched");
 	}
 
 	@Override
@@ -45,7 +44,6 @@ public class ChestBlockBuilderEntity extends LootableContainerBlockEntity {
 			Inventories.toTag(tag, this.inventory);
 		}
 		tag.putBoolean("locked", this.locked);
-		tag.putBoolean("latched", this.latched);
 		return tag;
 	}
 
