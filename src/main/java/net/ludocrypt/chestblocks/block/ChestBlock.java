@@ -207,8 +207,8 @@ public class ChestBlock extends Block implements Waterloggable, BlockEntityProvi
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return new ChestBlockBuilderEntity();
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new ChestBlockBuilderEntity(pos, state);
 	}
 
 	@Override

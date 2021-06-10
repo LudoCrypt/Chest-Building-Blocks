@@ -1,18 +1,22 @@
 package net.ludocrypt.chestblocks.client.entity;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import net.ludocrypt.chestblocks.block.ChestBlock;
-import net.ludocrypt.chestblocks.block.entity.ChestBlockBuilderEntity;
 import net.ludocrypt.chestblocks.client.atlas.ChestAtlasSprites;
 import net.ludocrypt.chestblocks.config.ChestBlocksConfig;
 import net.ludocrypt.chestblocks.util.BlockContext;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.ModelPart.Cuboid;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
@@ -20,20 +24,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEntity> {
+public class ChestBlockRenderer<T extends BlockEntity> implements BlockEntityRenderer<T> {
 
-	private SpriteIdentifier sprite = ChestAtlasSprites.NORMAL;
+	private final SpriteIdentifier sprite;
 
-	public ChestBlockRenderer(BlockEntityRenderDispatcher dispatcher) {
-		super(dispatcher);
+	public ChestBlockRenderer(SpriteIdentifier sprite) {
+		super();
 		Calendar calendar = Calendar.getInstance();
 		if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 && calendar.get(5) <= 26) {
 			this.sprite = ChestAtlasSprites.CHRISTMAS;
+		} else {
+			this.sprite = sprite;
 		}
 	}
 
 	@Override
-	public void render(ChestBlockBuilderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void render(T entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		BlockContext context = new BlockContext(entity.getWorld(), entity.getPos(), entity.getCachedState().getBlock());
 
 		renderLatch(entity, matrices, vertexConsumers, light, overlay);
@@ -49,7 +55,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 
 	}
 
-	private void renderNorth(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
+	private void renderNorth(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
 		int u = 0;
 		int v = 0;
 
@@ -205,7 +211,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		renderPartNorthern(entity, matrices, vertexConsumers, light, overlay, 8, 8, 1, u * 8, v * 8);
 	}
 
-	private void renderEast(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
+	private void renderEast(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
 		int u = 0;
 		int v = 0;
 
@@ -361,7 +367,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		renderPartEastern(entity, matrices, vertexConsumers, light, overlay, 8, 8, 1, u * 8, v * 8);
 	}
 
-	private void renderSouth(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
+	private void renderSouth(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
 		int u = 0;
 		int v = 0;
 
@@ -517,7 +523,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		renderPartSouthern(entity, matrices, vertexConsumers, light, overlay, 8, 8, 1, u * 8, v * 8);
 	}
 
-	private void renderWest(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
+	private void renderWest(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
 		int u = 0;
 		int v = 0;
 
@@ -673,7 +679,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		renderPartWestern(entity, matrices, vertexConsumers, light, overlay, 8, 8, 1, u * 8, v * 8);
 	}
 
-	private void renderUp(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
+	private void renderUp(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
 		int u = 0;
 		int v = 0;
 
@@ -786,7 +792,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		renderPartUpper(entity, matrices, vertexConsumers, light, overlay, 8, 8, 1, u * 8, v * 8);
 	}
 
-	private void renderLower(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
+	private void renderLower(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BlockContext context, boolean shouldUp) {
 		int u = 0;
 		int v = 0;
 
@@ -899,7 +905,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		renderPartLower(entity, matrices, vertexConsumers, light, overlay, 8, 8, 1, u * 8, v * 8);
 	}
 
-	private void renderPartNorthern(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
+	private void renderPartNorthern(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
 		Direction face = entity.getCachedState().get(ChestBlock.FACING);
 
 		if (v != 96 && v != 104) {
@@ -919,15 +925,12 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 			}
 		}
 
-		ModelPart modelPart = new ModelPart(256, 256, 0, 0);
-
-		modelPart.setTextureOffset(u * 2, v);
-		modelPart.addCuboid(x, y - 1, z, 8, 8, 0);
+		ModelPart modelPart = new ModelPart(Lists.newArrayList(new Cuboid(u * 2, v, x, y - 1, z, 8, 8, 0, 0, 0, 0, false, 256, 256)), new HashMap<String, ModelPart>());
 
 		modelPart.render(matrices, sprite.getVertexConsumer(vertexConsumers, RenderLayer::getEntityCutout), light, overlay);
 	}
 
-	private void renderPartEastern(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
+	private void renderPartEastern(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
 		Direction face = entity.getCachedState().get(ChestBlock.FACING);
 
 		if (v != 96 && v != 104) {
@@ -948,10 +951,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		}
 
 		matrices.push();
-		ModelPart modelPart = new ModelPart(256, 256, 0, 0);
-
-		modelPart.setTextureOffset(u * 2, v);
-		modelPart.addCuboid(x, y - 1, z - 16, 8, 8, 0);
+		ModelPart modelPart = new ModelPart(Lists.newArrayList(new Cuboid(u * 2, v, x, y - 1, z - 16, 8, 8, 0, 0, 0, 0, false, 256, 256)), new HashMap<String, ModelPart>());
 
 		modelPart.yaw += (float) Math.toRadians(-90) / 2;
 		modelPart.rotate(matrices);
@@ -960,7 +960,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		matrices.pop();
 	}
 
-	private void renderPartSouthern(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
+	private void renderPartSouthern(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
 		Direction face = entity.getCachedState().get(ChestBlock.FACING);
 
 		if (v != 96 && v != 104) {
@@ -981,10 +981,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		}
 
 		matrices.push();
-		ModelPart modelPart = new ModelPart(256, 256, 0, 0);
-
-		modelPart.setTextureOffset(u * 2, v);
-		modelPart.addCuboid(x - 16, y - 1, z - 16, 8, 8, 0);
+		ModelPart modelPart = new ModelPart(Lists.newArrayList(new Cuboid(u * 2, v, x - 16, y - 1, z - 16, 8, 8, 0, 0, 0, 0, false, 256, 256)), new HashMap<String, ModelPart>());
 
 		modelPart.yaw += (float) Math.toRadians(180) / 2;
 		modelPart.rotate(matrices);
@@ -993,7 +990,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		matrices.pop();
 	}
 
-	private void renderPartWestern(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
+	private void renderPartWestern(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
 		Direction face = entity.getCachedState().get(ChestBlock.FACING);
 
 		if (v != 96 && v != 104) {
@@ -1014,10 +1011,7 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		}
 
 		matrices.push();
-		ModelPart modelPart = new ModelPart(256, 256, 0, 0);
-
-		modelPart.setTextureOffset(u * 2, v);
-		modelPart.addCuboid(x - 16, y - 1, z, 8, 8, 0);
+		ModelPart modelPart = new ModelPart(Lists.newArrayList(new Cuboid(u * 2, v, x - 16, y - 1, z, 8, 8, 0, 0, 0, 0, false, 256, 256)), new HashMap<String, ModelPart>());
 
 		modelPart.yaw += (float) Math.toRadians(90) / 2;
 		modelPart.rotate(matrices);
@@ -1026,16 +1020,13 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		matrices.pop();
 	}
 
-	private void renderPartUpper(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
+	private void renderPartUpper(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
 		if (v != 96 && v != 104) {
 			v += 64;
 		}
 
 		matrices.push();
-		ModelPart modelPart = new ModelPart(256, 256, 0, 0);
-
-		modelPart.setTextureOffset(u * 2, v);
-		modelPart.addCuboid(x, y, z - 15, 8, 8, 0);
+		ModelPart modelPart = new ModelPart(Lists.newArrayList(new Cuboid(u * 2, v, x, y, z - 15, 8, 8, 0, 0, 0, 0, false, 256, 256)), new HashMap<String, ModelPart>());
 
 		modelPart.pitch += (float) Math.toRadians(90) / 2;
 		modelPart.rotate(matrices);
@@ -1044,16 +1035,13 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		matrices.pop();
 	}
 
-	private void renderPartLower(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
+	private void renderPartLower(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, int x, int y, int z, int u, int v) {
 		if (v != 96 && v != 104) {
 			v += 80;
 		}
 
 		matrices.push();
-		ModelPart modelPart = new ModelPart(256, 256, 0, 0);
-
-		modelPart.setTextureOffset(u * 2, v);
-		modelPart.addCuboid(x, y - 16, z - 1, 8, 8, 0);
+		ModelPart modelPart = new ModelPart(Lists.newArrayList(new Cuboid(u * 2, v, x, y - 16, z - 1, 8, 8, 0, 0, 0, 0, false, 256, 256)), new HashMap<String, ModelPart>());
 
 		modelPart.pitch += (float) Math.toRadians(-90) / 2;
 		modelPart.rotate(matrices);
@@ -1062,35 +1050,48 @@ public class ChestBlockRenderer extends BlockEntityRenderer<ChestBlockBuilderEnt
 		matrices.pop();
 	}
 
-	private void renderLatch(ChestBlockBuilderEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	private void renderLatch(T entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		if (shouldUpFull(entity.getWorld(), entity.getPos(), entity.getCachedState().getBlock(), ChestBlocksConfig.getInstance().expensiveRendering)) {
 			VertexConsumer vertexConsumer = sprite.getVertexConsumer(vertexConsumers, RenderLayer::getEntityCutout);
 
 			matrices.push();
 
-			ModelPart modelPart = new ModelPart(256, 256, 0, 0);
-
-			modelPart.setTextureOffset(0, 112);
+			List<Cuboid> list = Lists.newArrayList();
 
 			switch (entity.getCachedState().get(ChestBlock.FACING)) {
 			case EAST:
-				modelPart.addCuboid(7, 7, -16, 2, 4, 1);
+				list.add(new Cuboid(0, 112, 7, 7, -16, 2, 4, 1, 0, 0, 0, false, 256, 256));
+				break;
+			case NORTH:
+				list.add(new Cuboid(0, 112, 7, 7, 0, 2, 4, 1, 0, 0, 0, false, 256, 256));
+				break;
+			case SOUTH:
+				list.add(new Cuboid(0, 112, 7, 7, 15, 2, 4, 1, 0, 0, 0, false, 256, 256));
+				break;
+			case WEST:
+				list.add(new Cuboid(0, 112, 7, 7, -1, 2, 4, 1, 0, 0, 0, false, 256, 256));
+				break;
+			default:
+				list.add(new Cuboid(0, 112, 7, 7, 0, 2, 4, 1, 0, 0, 0, false, 256, 256));
+				break;
+			}
+
+			ModelPart modelPart = new ModelPart(list, new HashMap<String, ModelPart>());
+
+			switch (entity.getCachedState().get(ChestBlock.FACING)) {
+			case EAST:
 				modelPart.yaw = -0.7854F;
 				break;
 			case NORTH:
-				modelPart.addCuboid(7, 7, 0, 2, 4, 1);
 				modelPart.yaw = 0;
 				break;
 			case SOUTH:
-				modelPart.addCuboid(7, 7, 15, 2, 4, 1);
 				modelPart.yaw = 0;
 				break;
 			case WEST:
-				modelPart.addCuboid(7, 7, -1, 2, 4, 1);
 				modelPart.yaw = -0.7854F;
 				break;
 			default:
-				modelPart.addCuboid(7, 7, 0, 2, 4, 1);
 				modelPart.yaw = 0;
 				break;
 			}

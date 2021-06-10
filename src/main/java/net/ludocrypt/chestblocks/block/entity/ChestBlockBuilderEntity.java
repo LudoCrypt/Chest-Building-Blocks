@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
@@ -16,6 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 
 public class ChestBlockBuilderEntity extends LootableContainerBlockEntity {
 
@@ -23,25 +24,25 @@ public class ChestBlockBuilderEntity extends LootableContainerBlockEntity {
 	public boolean locked = false;
 	protected int viewerCount;
 
-	public ChestBlockBuilderEntity() {
-		super(ChestBlocks.CHEST_BLOCK_ENTITY);
+	public ChestBlockBuilderEntity(BlockPos blockPos, BlockState blockState) {
+		super(ChestBlocks.CHEST_BLOCK_ENTITY, blockPos, blockState);
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound tag) {
+		super.readNbt(tag);
 		this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
 		if (!this.deserializeLootTable(tag)) {
-			Inventories.fromTag(tag, this.inventory);
+			Inventories.readNbt(tag, this.inventory);
 		}
 		this.locked = tag.getBoolean("locked");
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		super.toTag(tag);
+	public NbtCompound writeNbt(NbtCompound tag) {
+		super.writeNbt(tag);
 		if (!this.serializeLootTable(tag)) {
-			Inventories.toTag(tag, this.inventory);
+			Inventories.writeNbt(tag, this.inventory);
 		}
 		tag.putBoolean("locked", this.locked);
 		return tag;

@@ -1,5 +1,6 @@
 package net.ludocrypt.chestblocks.mixin;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +15,6 @@ import net.ludocrypt.chestblocks.block.TrappedChestBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.block.entity.EnderChestBlockEntity;
-import net.minecraft.block.entity.TrappedChestBlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
@@ -29,13 +29,20 @@ import net.minecraft.item.ItemStack;
 public class BuiltinModelItemRendererMixin {
 
 	@Shadow
-	private final ChestBlockEntity renderChestNormal = new ChestBlockEntity();
+	@Final
+	private ChestBlockEntity renderChestNormal;
 
 	@Shadow
-	private final ChestBlockEntity renderChestTrapped = new TrappedChestBlockEntity();
+	@Final
+	private ChestBlockEntity renderChestTrapped;
 
 	@Shadow
-	private final EnderChestBlockEntity renderChestEnder = new EnderChestBlockEntity();
+	@Final
+	private EnderChestBlockEntity renderChestEnder;
+
+	@Shadow
+	@Final
+	private BlockEntityRenderDispatcher blockEntityRenderDispatcher;
 
 	@Inject(method = "render", at = @At("HEAD"))
 	private void render(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
@@ -43,11 +50,11 @@ public class BuiltinModelItemRendererMixin {
 		if (item instanceof BlockItem) {
 			Block block = ((BlockItem) item).getBlock();
 			if (block instanceof ChestBlock) {
-				BlockEntityRenderDispatcher.INSTANCE.renderEntity(renderChestNormal, matrices, vertexConsumers, light, overlay);
+				blockEntityRenderDispatcher.renderEntity(renderChestNormal, matrices, vertexConsumers, light, overlay);
 			} else if (block instanceof TrappedChestBlock) {
-				BlockEntityRenderDispatcher.INSTANCE.renderEntity(renderChestTrapped, matrices, vertexConsumers, light, overlay);
+				blockEntityRenderDispatcher.renderEntity(renderChestTrapped, matrices, vertexConsumers, light, overlay);
 			} else if (block instanceof EnderChestBlock) {
-				BlockEntityRenderDispatcher.INSTANCE.renderEntity(renderChestEnder, matrices, vertexConsumers, light, overlay);
+				blockEntityRenderDispatcher.renderEntity(renderChestEnder, matrices, vertexConsumers, light, overlay);
 			}
 		}
 	}

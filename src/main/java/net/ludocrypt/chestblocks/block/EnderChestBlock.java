@@ -212,8 +212,8 @@ public class EnderChestBlock extends Block implements Waterloggable, BlockEntity
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return new EnderChestBlockBuilderEntity();
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new EnderChestBlockBuilderEntity(pos, state);
 	}
 
 	@Override
